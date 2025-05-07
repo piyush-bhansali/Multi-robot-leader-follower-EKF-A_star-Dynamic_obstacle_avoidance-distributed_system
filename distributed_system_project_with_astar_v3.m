@@ -2,6 +2,8 @@ clc;
 clear;
 close all;
 
+
+
 %Robot parameters
 robot = struct('robotRadius', 0.2, 'wheelRadius', 0.1, 'axleLength', 0.3, 'maxSpeed', 0.5, 'maxOmega', 0.1, 'numOfTicks', 1000, 'lookAheadDistance', 1.5, 'safeDistance', 2, 'numberOfFollower', 2);
 
