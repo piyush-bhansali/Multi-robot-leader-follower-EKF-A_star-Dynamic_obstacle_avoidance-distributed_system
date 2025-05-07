@@ -1,0 +1,43 @@
+% Extended Kalman filter update state algorithm for the leader
+function [state_upd, P_upd] = ekf_update(leaderPose, P_pred, measurement, R_Lidar, followerPose)
+   
+    state_pred = leaderPose;
+
+    if any(isnan(measurement))
+        state_upd = state_pred;
+        P_upd = P_pred;
+        return;
+
+    else
+
+       xF     = followerPose(1);
+       yF     = followerPose(2);
+       thetaF = followerPose(3);
+
+       xL     = leaderPose(1);
+       yL     = leaderPose(2);
+
+        % true relative vector
+        dx = xL - xF;
+        dy = yL - yF;
+        r = sqrt(dx^2 + dy^2);
+
+    % true range & bearing
+        r_pred   = norm(leaderPose(1:2) - followerPose(1:2));
+        phi_pred = wrapToPi(atan2(dy, dx) - thetaF);
+
+        z_pred = [r_pred; phi_pred];
+
+        H_Lidar = [dx/r, dy/r, 0;
+        -dy/r^2, dx/r^2, -1];
+
+        y_Lidar = measurement - z_pred;
+        S_Lidar = H_Lidar * P_pred * H_Lidar' + R_Lidar;
+        K_Lidar = P_pred * H_Lidar' / S_Lidar;
+        state_upd = state_pred + K_Lidar * y_Lidar;
+        % Covariance update (Joseph form for numerical stability)
+        I = eye(size(P_pred));
+        P_upd = (I - K_Lidar * H_Lidar) * P_pred * (I - K_Lidar * H_Lidar)' + K_Lidar * R_Lidar * K_Lidar';
+        
+    end
+end
