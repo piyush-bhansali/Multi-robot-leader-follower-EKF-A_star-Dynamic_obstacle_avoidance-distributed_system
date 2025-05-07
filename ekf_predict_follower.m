@@ -1,4 +1,4 @@
-function [state_pred, P_pred] = ekf_predict(robotPose, encoder, P, Q, robot)
+function [state_pred, P_pred] = ekf_predict_follower(robotPose, encoder, P, Q, robot)
 
      ticks_L = encoder(1);
      ticks_R = encoder(2);
