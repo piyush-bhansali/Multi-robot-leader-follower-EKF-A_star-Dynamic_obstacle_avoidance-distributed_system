@@ -91,7 +91,7 @@ for i = 1 : N
 end
 %%
 % GPS Outage Parameters
-gpsOutageProbability = 0.005;
+gpsOutageProbability = 0.05;
 gpsOutageTimeout = 2;
 gpsOutageActive = false;
 

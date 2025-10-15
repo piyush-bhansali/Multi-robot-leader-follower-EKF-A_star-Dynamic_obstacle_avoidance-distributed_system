@@ -1,6 +1,6 @@
 function [obs_detected, gridValues] = findObs(robot_pose,  obstacles, gridValues, robot, env)
 
-    sensor_angle = pi/8;
+    sensor_angle = pi/10;
     detected_distances = 10000;
     sensor_noise_level = 0.01;
     heading_direction = robot_pose(3);

@@ -24,6 +24,4 @@ function [state_pred, P_pred] = ekf_predict(robotPose, encoder, P, Q, robot)
      
      P_pred = F * P * F' + G * Q * G';
      
-     end
-     
-     
+end
